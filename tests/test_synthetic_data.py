@@ -26,11 +26,38 @@ class test_generate_data(unittest.TestCase):
         pred = clf.fit_predict(X_train=X[:,:,0], \
                                 X_test=np.array([0,-1,1]).reshape(1,3))
         self.assertEqual(list(pred),[1])
-        # pred = clf.fit_predict(X_train=X[:,1].reshape(-1,1), \
-        #                         X_test=np.array([-1,-2,1,2,0]).reshape(-1,1))
-        # self.assertEqual(list(pred),[1,-1,-1,-1,-1])
-        # pred = clf.fit_predict(X_train=X[:,2].reshape(-1,1), \
-        #                         X_test=np.array([-1,-2,1,2,0]).reshape(-1,1))
-        # self.assertEqual(list(pred),[-1,-1,1,-1,-1])
+        pred = clf.fit_predict(X_train=X[:,:,1], \
+                                X_test=np.array([2,0,-2]).reshape(1,3))
+        self.assertEqual(list(pred),[1])
+        pred = clf.fit_predict(X_train=X[:,:,1], \
+                                X_test=np.array([-1,1,0]).reshape(1,3))
+        self.assertEqual(list(pred),[-1])
 
-        
+    def test_oneclasssvm(self):
+        synth_data = synthetic_data.generateClusters(self.n_cluster, self.mean, self.cov, self.n_features)
+        X,y = synth_data.generate_data()
+        clf = detect_anomaly.runOneClassSVM()
+        pred = clf.fit_predict(X_train=X[:,:,0], \
+                                X_test=np.array([0,-1,1]).reshape(1,3))
+        self.assertEqual(list(pred),[1])
+        pred = clf.fit_predict(X_train=np.vstack([X[:,:,0],X[:,:,1]]), \
+                                X_test=np.array([2,0,-2]).reshape(1,3))
+        self.assertEqual(list(pred),[1])
+        pred = clf.fit_predict(X_train=np.vstack([X[:,:,0],X[:,:,1]]), \
+                                X_test=np.array([0,-1,1]).reshape(1,3))
+        self.assertEqual(list(pred),[1])
+        pred = clf.fit_predict(X_train=np.vstack([X[:,:,0],X[:,:,1]]), \
+                                X_test=np.array([-1,1,0]).reshape(1,3))
+        self.assertEqual(list(pred),[-1])
+
+    def test_oneclasssvm(self):
+        synth_data = synthetic_data.generateClusters(self.n_cluster, self.mean, self.cov, self.n_features)
+        X,y = synth_data.generate_data()
+        clf = detect_anomaly.runKMeans(n_clusters=1)
+        pred = clf.fit_predict(X_train=X[:,:,0], \
+                                X_test=np.array([0,-1,1]).reshape(1,3))
+        self.assertEqual(list(pred),[0])
+        clf = detect_anomaly.runKMeans(n_clusters=2)
+        pred = clf.fit_predict(X_train=np.vstack([X[:,:,0],X[:,:,1]]), \
+                                X_test=np.array([[2,0,-2],[-1,1,0]]).reshape(2,3))
+        self.assertNotEqual(list(pred)[0],list(pred)[1])
