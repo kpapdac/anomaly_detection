@@ -1,7 +1,7 @@
 from sklearn.ensemble import IsolationForest
 from sklearn.svm import OneClassSVM
 from sklearn.cluster import KMeans
-# gaussian mixture
+from sklearn import mixture
 
 class runIsolationForest:
     def __init__(self, max_samples=100):
@@ -30,3 +30,30 @@ class runKMeans:
         clf = KMeans(n_clusters=self.n_clusters)
         clf.fit(X_train)
         return clf.predict(X_test)
+
+class runGaussianMixture:
+    def __init__(self, n_clusters):
+        self.n_clusters = n_clusters
+    
+    def fit_predict(self, X_train, X_test):
+        gmm = mixture.GaussianMixture(n_components=self.n_clusters, covariance_type="full")
+        gmm.fit(X_train)
+        return gmm.predict(X_test), gmm.means_, gmm.covariances_
+
+
+#%%
+import pyAgrum as gum
+bn=gum.fastBN("c->r->w<-s<-c")
+bn
+
+# %%
+# %%
+import matplotlib.pylab as plt
+import numpy as np
+
+# %% 
+plt.figure()
+plt.plot(np.sin(np.linspace(-np.pi, np.pi, 1001)))
+plt.show()
+
+# %%
