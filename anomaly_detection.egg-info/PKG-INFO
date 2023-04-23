@@ -1,0 +1,9 @@
+Metadata-Version: 2.1
+Name: anomaly-detection
+Version: 0.0.1
+Summary: Anomaly detection algorithms
+Home-page: https://github.com/kpapdac/anomaly_detection
+Author: kpapdac
+Author-email: kpapdac@gmail.com
+Keywords: outliers anomaly clustering
+Provides-Extra: docs
