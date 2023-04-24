@@ -1,0 +1,1 @@
+from anomaly_detection import detect_anomaly, synthetic_data

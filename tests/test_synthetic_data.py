@@ -2,7 +2,7 @@ import os
 os.chdir('../')
 import numpy as np
 import unittest
-from src import synthetic_data, detect_anomaly
+from anomaly_detection import synthetic_data, detect_anomaly
 from sklearn.ensemble import IsolationForest
 
 class test_generate_data(unittest.TestCase):
