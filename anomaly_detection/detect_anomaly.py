@@ -67,6 +67,23 @@ class NeuralNetwork(nn.Module):
         logits = self.linear_relu_stack(x)
         return logits
 
+class NeuralNetwork2L(nn.Module):
+    def __init__(self, D_in, H, D_out):
+        super().__init__()
+        self.flatten = nn.Flatten()
+        self.linear_relu_stack = nn.Sequential(
+            nn.Linear(D_in, H),
+            nn.ReLU(),
+            nn.Linear(H, H),
+            nn.ReLU(),
+            nn.Linear(H, D_out),
+        )
+
+    def forward(self, x):
+        # x = self.flatten(x)
+        logits = self.linear_relu_stack(x)
+        return logits
+
 class optimizeNN:
     def __init__(self, dataloader, model, learning_rate, batch_size, epochs):
         self.dataloader = dataloader
